@@ -1,0 +1,47 @@
+table {
+  overflow: auto;
+  border-collapse: collapse;
+}
+
+table td, table th {
+  border: 1px solid black;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+table tr:first-child th {
+  border-top: 0;
+}
+
+table tr:last-child td {
+  border-bottom: 0;
+}
+
+table tr td:first-child,
+table tr th:first-child {
+  border-left: 0;
+}
+
+table tr td:last-child,
+table tr th:last-child {
+  border-right: 0;
+}
+
+body {
+  background-color: #efefef;
+  font-family: 'Open Sans';
+}
+
+.dptable {
+  margin: 2%;
+}
+.tr-collapsed td,
+.tr-collapsed th {
+  max-height: 100px;
+}
+.tr-expanded td,
+.tr-expanded th {
+  max-height: 990px;
+}
