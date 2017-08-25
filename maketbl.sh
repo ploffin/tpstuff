@@ -1,8 +1,7 @@
 #!/bin/bash
 
-all_csv_str=$( echo "*.csv" | sort )
-all_csv=( $all_csv_str )
-
-csv2html -o dptable.html -r --table 'class="dptable"' --tr 'class=tr-collapsed' "${all_csv}"
+rm dp-spreadsheet.csv
+python get_packet.py 
+csv2html -o dptable.html -r --table 'class="dptable"' --tr 'class=tr-collapsed' dp-spreadsheet.csv
 
 echo "document.write('$(cat dptable.html | sed 's/\x27/\&quot;/g' | tr '\n' ' ' )');" > dptable.js
