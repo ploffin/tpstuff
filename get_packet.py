@@ -62,7 +62,7 @@ def list_files(service):
 
 for item in list_files(drive_service):
     if item.get('title')=='ELTP Season 10 Signup Form (Responses)':
-        outfile = os.path.join(OUT_PATH, '%s' % 'dp-spreadsheet.csv')
+        outfile = os.path.join(OUT_PATH, '%s' % 'dptable.csv')
         download_url = None
         if 'exportLinks' in item and 'text/csv' in item['exportLinks']:
             download_url = item['exportLinks']['text/csv']
