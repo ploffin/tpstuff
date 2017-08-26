@@ -5,9 +5,9 @@ csv2html -o dptable.html -r --table 'class="dptable"' --tr 'class=tr-collapsed' 
 sed -i '2 s/\(^.*$\)/<thead>\1<\/thead>/' dptable.html
 echo "document.write('$(cat dptable.html | sed 's/\x27/\&quot;/g' | tr '\n' ' ' )');" > dptable.js
 rm dptable.html
-rm dp-spreadsheet.csv
+rm dptable.csv
 
 git reset
 git add dptable.js
 git commit -m"update table"
-git push origin master
+git push origin test-packet
