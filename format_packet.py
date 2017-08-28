@@ -17,7 +17,7 @@ def process_header(table):
         else:
             text = 'col-%d' % i
         classnames.append(text)
-        cell.attrib['class'] = classname
+        cell.attrib['class'] = text
     return classnames
 
 # Add class attribute classname to element, admitting
