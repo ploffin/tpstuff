@@ -2,20 +2,22 @@
 from lxml import etree
 
 # Remove uppercase and whitespace
-
 def sanitize(text):
     return unicode(text.lower(),'utf-8').translate({ord(' '): u'-'})
 
 # Get classnames to be added to respective columns
-# of each header entry
-def get_classnames_from_header(table):
+# of each header cells, and add class attributes
+# to the header cells
+def process_header(table):
     header = table.find('.//thead')
     classnames = []
     for i, cell in enumerate(header.iter('th')):
         if cell.text != None:
-            classnames.append(sanitize(cell.text))
+            text = sanitize(cell.text)
         else:
-            classnames.append('col-%d' % i)
+            text = 'col-%d' % i
+        classnames.append(text)
+        cell.attrib['class'] = classname
     return classnames
 
 # Add class attribute classname to element, admitting
@@ -39,7 +41,7 @@ def add_class_to_element(classname,element,special_classnames={}):
         element.attrib['class'] = classname
     return
 
-# Populate entire table with class attributes
+# Populate table body with class attributes
 def add_classes_to_table(table,classnames,special_classnames={}):
     for i, row in enumerate(table.iter('tr')):
         if i != 0 and i != 1:
@@ -68,7 +70,7 @@ special_classnames = {
 
 # Read table and add class attributes
 dptable = etree.parse('dptable.html')
-classnames = get_classnames_from_header(dptable)
+classnames = process_header(dptable)
 add_classes_to_table(dptable,classnames,special_classnames)
 
 # Insert table into main document
