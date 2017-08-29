@@ -9,4 +9,4 @@ python format_packet.py
 git reset
 git add draft-packet.html
 git commit -m"update table"
-git push origin test-packet
+git push origin master
