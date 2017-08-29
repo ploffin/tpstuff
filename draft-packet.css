@@ -4,13 +4,12 @@ table {
 }
 
 body {
-  background-color: #efefef;
+  background-color: #000000;
   font-family: 'Open Sans';
 }
 
 table td,
 table th {
-  border: 1px solid black;
   min-width: 9em;
   max-width: 9em;
   overflow: hidden;
@@ -18,24 +17,19 @@ table th {
   white-space: nowrap;
 }
 
-thead th {
-  border-top: 0;
+tr:nth-child(odd) {
+  background-image: linear-gradient(-90deg, #FFFFFF, #9E9E9E);
+}
+
+tr:nth-child(even) {
+  background-image: linear-gradient(-90deg, #dedede, #6e6e6e);
+}
+
+table th {
+  background-color: #FF4136;
+  color: #ffffff;
   min-width: 9em;
   max-width: 9em;
-}
-
-table tr:last-child td {
-  border-bottom: 0;
-}
-
-table tr td:first-child, 
-table tr th:first-child {
-  border-left: 0;
-}
-
-table tr td:last-child,
-table tr th:last-child {
-  border-right: 0;
 }
 
 .dptable {
@@ -47,3 +41,5 @@ table tr th:last-child {
   max-height: 15em;
   white-space: normal;
 }
+
+.col-0 { display: none; }
