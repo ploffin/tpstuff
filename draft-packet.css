@@ -1,12 +1,25 @@
+body {
+  background-image: url('http://tagpro-orbit.koalabeast.com/images/background.jpg');
+  font-family: 'Open Sans';
+}
+
+header {
+  left: 2%;
+  position: fixed;
+}
+
+header h1 {
+  color: #ffffff;
+  font-size: 380%;
+}
+
 table {
-  overflow: auto;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  height: 100%;
   border-collapse: collapse;
 }
 
-body {
-  background-color: #000000;
-  font-family: 'Open Sans';
-}
 
 table td,
 table th {
@@ -18,22 +31,18 @@ table th {
 }
 
 tr:nth-child(odd) {
-  background-image: linear-gradient(-90deg, #FFFFFF, #9E9E9E);
+  background-color: rgb(242, 242, 242, 0.6);
 }
 
 tr:nth-child(even) {
-  background-image: linear-gradient(-90deg, #dedede, #6e6e6e);
+  background-color: rgb(204, 204, 204, 0.6);
 }
 
 table th {
-  background-color: #FF4136;
+  background-color: rgb(204, 0, 0, 0.6);
   color: #ffffff;
   min-width: 9em;
   max-width: 9em;
-}
-
-.dptable {
-  margin: 2%;
 }
 
 .tr-expanded td {
@@ -43,3 +52,35 @@ table th {
 }
 
 .col-0 { display: none; }
+
+div#table-container {
+  position: fixed;
+  bottom: 1.9%;
+  left: 2%;
+  width: 80%;
+  max-width: 80%;
+  height: 80%;
+  max-height: 80%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+div#summary-modal-container {
+  background-color: #ededed;
+  position: relative;
+  float: right;
+  color: #0f0f0f;
+  width: 19%;
+  height: 80%;
+  max-width: 19%;
+  max-height: 80%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+div#summary-modal {
+}
+
+div[class$='summary'] {
+  border-bottom: 1px solid #b3b3b3;
+}
