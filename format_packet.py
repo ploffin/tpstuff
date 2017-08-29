@@ -110,6 +110,6 @@ add_classes_to_table(dptable,classnames,special_classnames)
 # Insert table into main document
 parser = etree.HTMLParser()
 doc = etree.parse('outline.html', parser)
-body = doc.find('.//body')
+body = doc.xpath("//body/div[@id='table-container']")[0]
 body.append(dptable.getroot())
 doc.write('draft-packet.html', pretty_print = True, method = 'html', encoding = 'utf-8')
