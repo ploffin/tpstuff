@@ -7,12 +7,12 @@ window.onload = function(){
       var newDiv = document.createElement("DIV");
       modal.appendChild(newDiv);
       newDiv.className = category + ' summary'
-      newDiv.innerHTML = content;
+      newDiv.textContent = content;
     }
     else {
       var selector = '[class^=' + '\'' + category + '\'][class$=\'summary\']';
       console.log(selector);
-      document.querySelector(selector).innerHTML = content;
+      document.querySelector(selector).textContent = content;
     }
   };
 
@@ -37,7 +37,7 @@ window.onload = function(){
   };
   var nameCells = document.querySelectorAll('td.col-2');
   var len = nameCells.length;
-  for (var i = 1; i < len; i++) {
+  for (var i = 0; i < len; i++) {
     nameCells[i].onclick = summaryPopUp;
   };
 };
