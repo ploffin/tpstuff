@@ -10,6 +10,8 @@ def sanitize(text):
 # where specified to the header cells. Since colspan
 # creates new cells, we delete the corresponding
 # number of cells to merge
+#TODO scrap the whole thing - do in two passes,
+# one to get info and another to create <thead>
 def process_header(table,merge={},delete={},no_rowspan={}):
     classnames = []
     to_remove = []
