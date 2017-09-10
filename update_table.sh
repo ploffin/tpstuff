@@ -3,7 +3,7 @@
 rm dptable.html
 rm dptable.csv
 python get_packet.py 
-csv2html -o dptable.html --table 'class="dptable"' --tr 'class="tr-collapsed"' dptable.csv
+csv2html -n -o dptable.html --table 'class="dptable"' dptable.csv
 python format_packet.py
 
 #git reset

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from lxml import etree
+from copy import deepcopy
 
 # Remove uppercase and whitespace
 def sanitize(text):
@@ -12,10 +13,48 @@ def sanitize(text):
 # number of cells to merge
 #TODO scrap the whole thing - do in two passes,
 # one to get info and another to create <thead>
-def process_header(table,merge={},delete={},no_rowspan={}):
+
+def empty_if_none(text):
+    if text == None:
+        return ''
+    else:
+        return text
+
+def store_header(table):
+    store = []
+    for count, row in enumerate(table.iter('tr')):
+        if count < 2:
+            store.append([])
+            for cell in row.iter('td'):
+                store[count].append(empty_if_none(cell.text))
+                cell.getparent().remove(cell)
+            row.getparent().remove(row)
+    print('%d x %d' % (len(store),len(store[0])))
+    return store
+
+def rearrange_header(table,store,switch):
+    header = etree.SubElement(table,'thead')
+    row1 = etree.SubElement(header,'tr')
+    for j, text in enumerate(store[1]):
+        current = etree.SubElement(row1,'th')
+        if switch[0] <= j and j <= switch[1]:
+            current.text = store[0][j]
+        else: 
+            current.text = text
+    row2 = etree.SubElement(header,'tr')
+    for j, text in enumerate(store[0]):
+        current = etree.SubElement(row2,'th')
+        if switch[0] <= j and j <= switch[1]:
+            current.text = store[1][j]
+        else: 
+            current.text = text
+    return header
+
+def process_header(header,merge={},delete={},no_rowspan={}):
     classnames = []
     to_remove = []
-    for i,cell in enumerate(table.iter('th')):
+    row1 = header.findall('tr')[0]
+    for i, cell in enumerate(row1.iter('th')):
         if len(to_remove):
             cell.getparent().remove(cell)
             to_remove.pop()
@@ -23,7 +62,7 @@ def process_header(table,merge={},delete={},no_rowspan={}):
             classnames.append(text)
             cell.attrib['class'] = text
         else:
-            if cell.text != None:
+            if cell.text != '':
                 text = sanitize(cell.text)
             else:
                 text = 'col-%d' % i
@@ -38,7 +77,10 @@ def process_header(table,merge={},delete={},no_rowspan={}):
                     colspan_val = merge[text]
                     to_remove = range(int(colspan_val)-1)
                     cell.attrib['colspan'] = colspan_val
-
+    row2 = header.findall('tr')[1]
+    for cell in row2.iter('th'):
+        if cell.text == '':
+            cell.getparent().remove(cell)
     return classnames
 
 # Add class attribute classname to element, admitting
@@ -64,19 +106,12 @@ def add_class_to_element(classname,element,special_classnames={}):
 
 # Populate table body with class attributes
 def add_classes_to_table(table,classnames,special_classnames={}):
-    for i, row in enumerate(table.iter('tr')):
+    body = table.findall('./tr')
+    for i, row in enumerate(body):
         cells = row.findall('td')
-        if i != 0 and i != 1:
-            for j, cell in enumerate(cells):
-                classname = classnames[j]
-                add_class_to_element(classname,cell,special_classnames)
-        elif i == 1:
-            for j, cell in enumerate(cells):
-                classname = classnames[j]
-                if cell.text != None:
-                    add_class_to_element('%s %s' % (classname,sanitize(cell.text)),cell)
-                else:
-                    cell.getparent().remove(cell)
+        for j, cell in enumerate(cells):
+            classname = classnames[j]
+            add_class_to_element(classname,cell,special_classnames)
     return
             
 # Define which content has special classes
@@ -85,18 +120,24 @@ mic_case = {
         'no' :'no'
         }
 ping_case = {
-        '<20' :'lt20'   ,
-        '<40' :'lt40'   ,
-        '<75' :'lt75'   ,
-        '<100':'lt100',
-        '>100':'gt100'
+        '< 10': 'lt10',
+        '11-20':'11-20',
+        '21-30':'21-30',
+        '31-40':'31-40',
+        '41-50':'41-50',
+        '51-60':'51-60',
+        '61-70':'61-70',
+        '71-80':'71-80',
+        '81-90':'81-90',
+        '91-100':'91-100',
+        '100+':'gt100'
         }
 special_classnames = {
         'microphone': mic_case,
         'ping'      : ping_case
         }
 merge_cols = {
-        'tagpro-name':'3',
+        'tagpro-username':'2',
         'location':'2',
         'ping':'2',
         }
@@ -106,7 +147,8 @@ no_rowspan = {
 
 # Read table and add class attributes
 dptable = etree.parse('dptable.html')
-classnames = process_header(dptable,merge_cols,{},no_rowspan)
+header = rearrange_header(dptable.getroot(),store_header(dptable),(9,10))
+classnames = process_header(header,merge_cols,{},no_rowspan)
 add_classes_to_table(dptable,classnames,special_classnames)
 
 # Insert table into main document
