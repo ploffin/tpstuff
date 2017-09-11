@@ -58,27 +58,30 @@ def list_files(service):
         page_token = files.get('nextPageToken')
         if not page_token:
             break
-
-
-for item in list_files(drive_service):
-    if item.get('title')=='ELTP Season 10: Draft Packet':
-        outfile = os.path.join(OUT_PATH, '%s' % 'dptable.csv')
-        download_url = None
-        if 'exportLinks' in item and 'text/csv' in item['exportLinks']:
-            download_url = item['exportLinks']['text/csv']
-        else:
-            print('ERROR getting %s' % item.get('title'))
-            print(item)
-            print(dir(item))
-        if download_url:
-            print("downloading %s" % item.get('title'))
-            resp, content = drive_service._http.request(download_url)
-            if resp.status == 200:
-                if os.path.isfile(outfile):
-                    print("ERROR, %s already exist" % outfile)
-                else:
-                    with open(outfile, 'wb') as f:
-                        f.write(content)
-                    print("OK")
+        
+def download_by_title(document_title,output_title):
+    for item in list_files(drive_service):
+        if item.get('title') == document_title:
+            outfile = os.path.join(OUT_PATH, output_title)
+            download_url = None
+            if 'exportLinks' in item and 'text/csv' in item['exportLinks']:
+                download_url = item['exportLinks']['text/csv']
             else:
-                print('ERROR downloading %s' % item.get('title'))
+                print('ERROR getting %s' % item.get('title'))
+                print(item)
+                print(dir(item))
+            if download_url:
+                print("downloading %s" % item.get('title'))
+                resp, content = drive_service._http.request(download_url)
+                if resp.status == 200:
+                    if os.path.isfile(outfile):
+                        print("ERROR, %s already exist" % outfile)
+                    else:
+                        with open(outfile, 'wb') as f:
+                            f.write(content)
+                        print("OK")
+                else:
+                    print('ERROR downloading %s' % item.get('title'))
+
+download_by_title('ELTP Season 10: Draft Packet', 'dptable.csv')
+download_by_title('ELTP Season 10 Signup Form (Responses)', 'responses.csv')

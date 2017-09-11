@@ -1,25 +1,22 @@
 # -*- coding: utf-8 -*-
-from lxml import etree
-from copy import deepcopy
-
+from lxml import etree 
+import re
 # Remove uppercase and whitespace
 def sanitize(text):
     return unicode(text.lower(),'utf-8').translate({ord(' '): u'-'})
 
-# Get classnames to be added to respective columns
-# of each header cells, add class attributes and colspan
-# where specified to the header cells. Since colspan
-# creates new cells, we delete the corresponding
-# number of cells to merge
-#TODO scrap the whole thing - do in two passes,
-# one to get info and another to create <thead>
-
+# Handle empty cells
 def empty_if_none(text):
     if text == None:
         return ''
     else:
         return text
 
+#############################################################################
+# these use some constants but it will be fine unless the google packet     #
+# magically gains a new header                                              #
+
+# Store header values in array
 def store_header(table):
     store = []
     for count, row in enumerate(table.iter('tr')):
@@ -29,9 +26,10 @@ def store_header(table):
                 store[count].append(empty_if_none(cell.text))
                 cell.getparent().remove(cell)
             row.getparent().remove(row)
-    print('%d x %d' % (len(store),len(store[0])))
     return store
 
+# Flip top and bottom header
+# except for in between switch values
 def rearrange_header(table,store,switch):
     header = etree.SubElement(table,'thead')
     row1 = etree.SubElement(header,'tr')
@@ -50,6 +48,11 @@ def rearrange_header(table,store,switch):
             current.text = text
     return header
 
+# Get classnames to be added to respective columns
+# of each header cells, add class attributes and colspan
+# where specified to the header cells. Since colspan
+# creates new cells, we delete the corresponding
+# number of cells to merge
 def process_header(header,merge={},delete={},no_rowspan={}):
     classnames = []
     to_remove = []
@@ -81,7 +84,11 @@ def process_header(header,merge={},delete={},no_rowspan={}):
     for cell in row2.iter('th'):
         if cell.text == '':
             cell.getparent().remove(cell)
+        else:
+            cell.attrib['class'] = sanitize(cell.text)
     return classnames
+#                                                                           #
+#############################################################################
 
 # Add class attribute classname to element, admitting
 # conditional formatting as defined in special_classnames
@@ -113,7 +120,74 @@ def add_classes_to_table(table,classnames,special_classnames={}):
             classname = classnames[j]
             add_class_to_element(classname,cell,special_classnames)
     return
-            
+
+# Get country flag and code from names
+# and delete name column
+# also uses constants 'col-8' and 'location'
+def add_country_flags(table,uc_look_up,png_look_up={}):
+    for ct in table.xpath("//td[@class='col-8']"):
+        row = ct.getparent()
+        text = ct.text
+        cell = row.xpath("./td[@class='location']")[0]
+        code = uc_look_up[ct.text][1]
+        if text in uc_look_up:
+            flag = uc_look_up[ct.text][0]
+            cell.text = flag + code
+        elif text in png_look_up:
+            image = etree.SubElement(cell,'img')
+            image.attrib['src'] = png_look_up[text]
+            image.tail = code
+        else:
+            print('Country %s not added!' % text)
+        ct.text = ''
+
+# Get tagpro.gg ids and return as list of pairs
+# uses constant names 'profile-id' and 'tagpro'
+def get_profile_ids(data):
+    rows = data.findall('tr')
+    responses_classnames = []
+    for cell in rows[0]:
+        responses_classnames.append(sanitize(cell.text))
+    add_classes_to_table(data,responses_classnames)
+    body = data.findall('tr')
+    name_id_pairs = {} 
+    found_names = False
+    found_ids = False
+    for row in rows[1:]:
+        cells = row.findall('td')
+        for j, cell in enumerate(cells):
+            if responses_classnames[j] == 'what-is-your-tagpro-username?':
+                found_names = True
+                name = cell.text
+            if responses_classnames[j] == 'what-is-your-tagpro-profile-id?':
+                found_ids = True
+                tp_id = cell.text
+        if name != None:
+            name_id_pairs[name] = tp_id
+    if not found_names:
+        print('column for TP name not found (getting ids)')
+    if not found_ids:
+        print('column for TP id not found')
+    return name_id_pairs
+
+# Insert profile ids at and of main table
+def add_profile_ids(table,classnames,id_data):
+    body = table.findall('./tr')
+    found_names = False
+    for i, row in enumerate(body):
+        cells = row.findall('td')
+        for j, cell in enumerate(cells):
+            if classnames[j] == 'tagpro-username':
+                found_names = True
+                name = re.match('(^.*?)\s*$',
+                        cell.text.split('(')[0]).group(1)
+                new = etree.SubElement(row,'td')
+                new.text = id_data[name]
+                new.attrib['class'] = 'tp-profile'
+    if not found_names:
+        print('column for TP name not found (adding ids)')
+    return
+
 # Define which content has special classes
 mic_case = {
         'yes':'yes',
@@ -134,26 +208,67 @@ ping_case = {
         }
 special_classnames = {
         'microphone': mic_case,
-        'ping'      : ping_case
+        'ping'      : ping_case,
+        'col-10'      : ping_case
         }
+# header cells with more than 1 colspan
 merge_cols = {
         'tagpro-username':'2',
         'location':'2',
         'ping':'2',
         }
+# header cells with no extra rowspan
 no_rowspan = {
         'ping',
         }
+# country flag emojis and ISO codes
+countries= {
+        'Australia': (u'\U0001f1e6\U0001f1fa','AUS'),
+        'Belgium': (u'\U0001f1e7\U0001f1ea','BEL'),
+        'Bosnia and Herzegovina': (u'\U0001f1e7\U0001f1e6','BIH'),
+        'Canada': (u'\U0001f1e8\U0001f1e6','CAN'),
+        'Croatia': (u'\U0001f1ed\U0001f1f7','HRV'),
+        'Denmark': (u'\U0001f1e9\U0001f1f0','DNK'),
+        'Egypt': (u'\U0001f1ea\U0001f1ec','EGY'),
+        'Finland': (u'\U0001f1eb\U0001f1ee','FIN'),
+        'France': (u'\U0001f1eb\U0001f1f7','FRA'),
+        'Germany': (u'\U0001f1e9\U0001f1ea','DEU'),
+        'Ireland': (u'\U0001f1ee\U0001f1ea','IRL'),
+        'Norway': (u'\U0001f1f3\U0001f1f4','NOR'),
+        'Poland': (u'\U0001f1f5\U0001f1f1','POL'),
+        'Portugal': (u'\U0001f1f5\U0001f1f9','PRT'),
+        'Romania': (u'\U0001f1e7\U0001f1f4','ROU'),
+        'Scotland': ((  u'\U0001f3f4'
+                     + u'\U000e0067'
+                     + u'\U000e0062'
+                     + u'\U000e0073'
+                     + u'\U000e0063'
+                     + u'\U000e0074'
+                     + u'\U000e007f'),'SCT'),
+        'Spain': (u'\U0001f1ea\U0001f1f8','ESP'),
+        'Sweden': (u'\U0001f1f8\U0001f1ea','SWE'),
+        'The Netherlands': (u'\U0001f1f3\U0001f1f1','NLD'),
+        'UK': (u'\U0001f1ec\U0001f1e7','GBR'),
+        'USA': (u'\U0001f1fa\U0001f1f8','USA')
+        }
+#countrypng = {
+#        'Scotland': 'saltire.png'
+#        }
 
 # Read table and add class attributes
 dptable = etree.parse('dptable.html')
-header = rearrange_header(dptable.getroot(),store_header(dptable),(9,10))
-classnames = process_header(header,merge_cols,{},no_rowspan)
-add_classes_to_table(dptable,classnames,special_classnames)
+main_header = rearrange_header(dptable.getroot(),store_header(dptable),(9,10))
+main_classnames = process_header(main_header,merge_cols,{},no_rowspan)
+add_classes_to_table(dptable,main_classnames,special_classnames)
+add_country_flags(dptable,countries)
+
+response_form = etree.parse('responses.html')
+ids_from_responses = get_profile_ids(response_form.getroot())
+add_profile_ids(dptable,main_classnames,ids_from_responses)
 
 # Insert table into main document
 parser = etree.HTMLParser()
 doc = etree.parse('outline.html', parser)
-body = doc.xpath("//body/div[@id='table-container']")[0]
+body = doc.xpath("//div[@id='table-container2']")[0]
 body.append(dptable.getroot())
 doc.write('draft-packet.html', pretty_print = True, method = 'html', encoding = 'utf-8')

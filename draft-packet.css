@@ -1,11 +1,16 @@
+/* general elements */
+
 body {
+  display: block;
   background-image: url('http://tagpro-orbit.koalabeast.com/images/background.jpg');
   font-family: 'Open Sans';
+  width: 100vw;
+  height: 100vh;
 }
 
 header {
+  display: block;
   left: 2%;
-  position: fixed;
 }
 
 header h1 {
@@ -13,74 +18,143 @@ header h1 {
   font-size: 380%;
 }
 
-table {
+/* draft packet table */
+
+div#table-container1 {
+  float: left;
+  width: 60%;
+  max-width: 80%;
+  height: 80%;
+  max-height: 80%;
+  overflow: hidden;
+  border: 0.2em solid #030303;
+  border-radius: 1em;
+}
+
+div#table-container2 {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+  padding-right: 0px;
+}
+
+
+table.dptable {
   overflow-y: scroll;
   overflow-x: scroll;
-  height: 100%;
+  height: 102%;
+  width: 102%;
   border-collapse: collapse;
 }
 
 
-table td,
-table th {
-  min-width: 9em;
-  max-width: 9em;
+table.dptable td {
+  text-align: center;
+  max-height: 1.9ex;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-tr:nth-child(odd) {
+table.dptable tbody tr:nth-child(odd) {
   background-color: rgba(242, 242, 242, 0.6);
 }
 
-tr:nth-child(even) {
+table.dptable tbody tr:nth-child(even) {
   background-color: rgba(204, 204, 204, 0.6);
 }
 
-table th {
+table.dptable th {
+  padding-left: 1em;
+  padding-right: 1em;
   background-color: rgba(204, 0, 0, 0.6);
   color: #ffffff;
-  min-width: 9em;
   max-width: 9em;
 }
 
-.tr-expanded td {
-  min-height: 15em;
-  max-height: 15em;
-  white-space: normal;
+table.dptable th.location {
+  padding: 0;
 }
 
-.col-0 { display: none; }
-
-div#table-container {
-  position: fixed;
-  bottom: 1.9%;
-  left: 2%;
-  width: 80%;
-  max-width: 80%;
-  height: 80%;
-  max-height: 80%;
-  overflow-y: scroll;
-  overflow-x: scroll;
+table.dptable td.location {
+  padding-left: 1em;
+  padding-right: 1em;
+  text-align: left;
 }
+
+table.dptable td.location img {
+  max-height: 1.9ex;
+  margin-left: -0.03em;
+  margin-bottom: -0.13em;
+}
+
+
+/* pad out right edge of table
+ * to overflow container */
+
+table.dptable th.ping, 
+table.dptable td.col-10 {
+  padding-right: 3em;
+}
+
+table.dptable th.orbit {
+  padding-right: 4em;
+}
+
+table.dptable td.picked,
+table.dptable td.reddit-name,
+table.dptable td.availability,
+table.dptable td.extra-information,
+table.dptable td.comment,
+table.dptable td.tp-profile,
+table.dptable th.picked,
+table.dptable th.reddit-name,
+table.dptable th.availability,
+table.dptable th.extra-information,
+table.dptable th.comment {
+  display: none;
+}
+
+/* popup table */
 
 div#summary-modal-container {
-  background-color: #ededed;
+  visibility: hidden;
   position: relative;
   float: right;
   color: #0f0f0f;
-  width: 19%;
-  height: 80%;
-  max-width: 19%;
-  max-height: 80%;
-  overflow-y: scroll;
-  overflow-x: scroll;
+  z-index: 1;
 }
 
 div#summary-modal {
+  padding-left: 2%;
+  padding-right: 2%;
+  width: 90%;
+  background-color: #ededed;
+  overflow-y: scroll;
 }
 
-div[class$='summary'] {
-  border-bottom: 1px solid #b3b3b3;
+table#summary-table {
+  text-align: center;
+  border-collapse: collapse;
 }
+
+tr#summary-row-1 td {
+  width: 50%;
+}
+
+tr.summary-row {
+  border-bottom: 1px solid #cdcdcd;
+}
+
+td p,
+th p {
+  margin: 0;
+  padding: 0;
+}
+
+p.modal-title {
+  font-weight: bold;
+}
+
+
