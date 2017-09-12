@@ -269,6 +269,6 @@ add_profile_ids(dptable,main_classnames,ids_from_responses)
 # Insert table into main document
 parser = etree.HTMLParser()
 doc = etree.parse('outline.html', parser)
-body = doc.xpath("//div[@id='table-container2']")[0]
+body = doc.xpath("//div[@id='table-container-2']")[0]
 body.append(dptable.getroot())
 doc.write('draft-packet.html', pretty_print = True, method = 'html', encoding = 'utf-8')

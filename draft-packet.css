@@ -2,7 +2,6 @@
 
 body {
   display: block;
-  background-image: url('http://tagpro-orbit.koalabeast.com/images/background.jpg');
   font-family: 'Open Sans';
   width: 100vw;
   height: 100vh;
@@ -14,13 +13,13 @@ header {
 }
 
 header h1 {
-  color: #ffffff;
+  color: #040404;
   font-size: 380%;
 }
 
 /* draft packet table */
 
-div#table-container1 {
+div#table-container-1 {
   float: left;
   width: 60%;
   max-width: 80%;
@@ -31,7 +30,7 @@ div#table-container1 {
   border-radius: 1em;
 }
 
-div#table-container2 {
+div#table-container-2 {
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -93,7 +92,10 @@ table.dptable td.location img {
 /* pad out right edge of table
  * to overflow container */
 
-table.dptable th.ping, 
+table.dptable th.ping {
+  padding-right: 3.7em;
+}
+
 table.dptable td.col-10 {
   padding-right: 3em;
 }
@@ -118,7 +120,7 @@ table.dptable th.comment {
 
 /* popup table */
 
-div#summary-modal-container {
+div#summary-modal-container-1 {
   visibility: hidden;
   position: relative;
   float: right;
@@ -126,20 +128,72 @@ div#summary-modal-container {
   z-index: 1;
 }
 
-div#summary-modal {
-  padding-left: 2%;
-  padding-right: 2%;
-  width: 90%;
+div#summary-modal-container-2 {
   background-color: #ededed;
-  overflow-y: scroll;
+  border: 0.2em solid #555555;
+  border-radius: 1em;
+  padding-right: 2em;
+  padding-left: 2em;
+  padding-bottom: 1em;
+  margin: 0 auto;
+  max-width: 40%;
+  overflow-x: hidden;
+}
+
+div.close-button {
+  position: relative;
+  text-align: center; 
+  color: #bbbbbb;
+  width: 1em;
+  height: 1em;
+  float: right;
+  padding: 0.3em;
+}
+
+div.close-button span {
+  display: block;
+  margin: 0 auto;
+  line-height: 1em;
+  font-weight: bold;
+}
+
+div.close-button:hover,
+div.close-button:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.2em;
+  border: 0.1em solid #4a4a4a;
+  border-top-right-radius: 0.5em;
+}
+
+div#summary-modal {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
 
 table#summary-table {
+  margin: 0 auto;
+  height: 100%;
   text-align: center;
   border-collapse: collapse;
+  overflow-y: scroll;
+}
+
+th#summary-tagpro-username {
+  font-size: 16pt;
+  font-style: italic;
+  padding-top: 1em;
+  padding-bottom: 0.4em;
+}
+
+table#summary-table img {
+  max-width: 2em;
 }
 
 tr#summary-row-1 td {
+  padding-top: 1em;
   width: 50%;
 }
 
@@ -157,4 +211,10 @@ p.modal-title {
   font-weight: bold;
 }
 
+td#summary-reddit-name {
+  padding-left: 40%;
+}
 
+td#summary-tp-profile {
+  padding-right: 40%;
+}
