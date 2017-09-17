@@ -17,6 +17,12 @@ header h1 {
   font-size: 380%;
 }
 
+div#wrapper {
+  margin: 0 auto;
+  width: 100vw;
+  height: 100vh;
+}
+
 /* draft packet table */
 
 div#table-container-1 {
@@ -125,7 +131,7 @@ div#summary-modal-container-1 {
   position: relative;
   float: right;
   color: #0f0f0f;
-  z-index: 1;
+  overflow: hidden;
 }
 
 div#summary-modal-container-2 {
@@ -135,19 +141,20 @@ div#summary-modal-container-2 {
   padding-right: 2em;
   padding-left: 2em;
   padding-bottom: 1em;
-  margin: 0 auto;
   max-width: 40%;
   overflow-x: hidden;
+  z-index: 999;
 }
 
 div.close-button {
-  position: relative;
+  position: absolute;
   text-align: center; 
   color: #bbbbbb;
   width: 1em;
   height: 1em;
   float: right;
   padding: 0.3em;
+  z-index: 9999;
 }
 
 div.close-button span {
@@ -212,9 +219,112 @@ p.modal-title {
 }
 
 td#summary-reddit-name {
-  padding-left: 40%;
+  padding-left: 20%;
 }
 
 td#summary-tp-profile {
-  padding-right: 40%;
+  padding-right: 20%;
+}
+
+
+/* responsive shit */
+
+@media screen and (max-width: 900px) {
+
+  header {
+    max-width: 80vw;
+  }
+
+  header h1 {
+    max-width: 99%;
+    font-size: 200%;
+  }
+
+  div#table-container-1 {
+    display: block;
+    float: left;
+    position: relative;
+    min-width: 94%;
+    border: 0.2em solid #030303;
+    border-radius: 1em;
+    margin: 0 auto;
+  }
+
+  td.tagpro-username,
+  th.tagpro-username {
+    width: 100vw;
+  }
+
+  table.dptable td.picked,
+  table.dptable td.reddit-name,
+  table.dptable td.rating,
+  table.dptable td.position,
+  table.dptable td.microphone,
+  table.dptable td.location,
+  table.dptable td.col-8,
+  table.dptable td.ping,
+  table.dptable td.col-10,
+  table.dptable td.availability,
+  table.dptable td.extra-information,
+  table.dptable td.comment,
+  table.dptable td.tp-profile,
+  table.dptable td.picked,
+  table.dptable th.picked,
+  table.dptable th.reddit-name,
+  table.dptable th.rating,
+  table.dptable th.position,
+  table.dptable th.microphone,
+  table.dptable th.location,
+  table.dptable th.col-8,
+  table.dptable th.ping,
+  table.dptable th.col-10,
+  table.dptable th.availability,
+  table.dptable th.extra-information,
+  table.dptable th.comment,
+  table.dptable th.chord,
+  table.dptable th.orbit,
+  table.dptable th.tp-profile {
+    display: none;
+  }
+
+  tr#summary-row-3 td p {
+    white-space: nowrap;
+    display: inline;
+  } 
+
+  div#summary-modal-container-1 {
+    visibility: hidden;
+    position: absolute;
+    float: right;
+    color: #0f0f0f;
+    z-index: 999;
+  }
+
+  div#summary-modal-container-2 {
+    background-color: #ededed;
+    position: relative;
+    top: 5%;
+    border: 0.2em solid #555555;
+    border-radius: 1em;
+    padding-right: 1em;
+    padding-left: 1em;
+    padding-bottom: 0.5em;
+    max-width: 78%;
+    max-height: 85%;
+    margin: 0 auto;
+    overflow-x: hidden;
+    box-shadow: -5px 5px 5px rgba(70,70,70,0.8);
+  }
+
+  div#summary-modal {
+    position: relative;
+    top: -10%;
+  }
+
+  th#summary-tagpro-username {
+    font-size: 16pt;
+    font-style: italic;
+    padding-bottom: 0.4em;
+  }
+
 }

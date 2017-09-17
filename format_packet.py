@@ -223,6 +223,7 @@ no_rowspan = {
         }
 # country flag emojis and ISO codes
 countries= {
+        'Andorra': (u'\U0001f1e6\U0001f1e9','AND'),
         'Australia': (u'\U0001f1e6\U0001f1fa','AUS'),
         'Belgium': (u'\U0001f1e7\U0001f1ea','BEL'),
         'Bosnia and Herzegovina': (u'\U0001f1e7\U0001f1e6','BIH'),
@@ -233,6 +234,7 @@ countries= {
         'Finland': (u'\U0001f1eb\U0001f1ee','FIN'),
         'France': (u'\U0001f1eb\U0001f1f7','FRA'),
         'Germany': (u'\U0001f1e9\U0001f1ea','DEU'),
+        'Hungary': (u'\U0001f1ed\U0001f1fa','HUN'),
         'Ireland': (u'\U0001f1ee\U0001f1ea','IRL'),
         'Norway': (u'\U0001f1f3\U0001f1f4','NOR'),
         'Poland': (u'\U0001f1f5\U0001f1f1','POL'),

@@ -5,10 +5,12 @@ window.onload = function(){
   var windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
   var tableHeight = dpTable.offsetHeight;
   var tableWidth = dpTable.offsetWidth;
+  if (window.screen.width > 900) {
+    modalContainer.style.width = (windowWidth - tableWidth - 1).toString() + 'px';
+    modalContainer.style.maxWidth = (windowWidth - tableWidth - 1).toString() + 'px';
+  }
   modalContainer.style.height = tableHeight.toString() + 'px';
-  modalContainer.style.width = (windowWidth - tableWidth - 1).toString() + 'px';
-  modalContainer.style.maxHeight = modalContainer.style.clientHeight
-  modalContainer.style.maxWidth = modalContainer.style.clientWidth
+  modalContainer.style.maxHeight = tableHeight.toString() + 'px';
 
   function noScrollBar(parentId,childId) {
     var parentElement = document.getElementById(parentId);
@@ -93,20 +95,19 @@ window.onload = function(){
       modalContainer.style.visibility = 'hidden';
     };
 
-    var mICStyle = getComputedStyle(modalInnerContainer);
-    var mICPadding = parseFloat(mICStyle.paddingRight);
-    var leftCalculated = (0.9)*(mICPadding);
-    var percentOfMIC = ((mICPadding - leftCalculated) / modalInnerContainer.offsetWidth);
-    console.log(modalInnerContainer.offsetWidth);
-    console.log(mICPadding);
-    console.log(leftCalculated);
-    console.log(percentOfMIC);
-
-    closeButton.style.top = (percentOfMIC*modalInnerContainer.offsetHeight).toString() + 'px';
-    closeButton.style.left = leftCalculated.toString() + 'px';
-
     noScrollBar('summary-modal-container-2','summary-modal')
     modalContainer.style.visibility = 'visible';
+
+    if (window.screen.width < 900) {
+      var mICWidth = modalInnerContainer.clientWidth;
+      var mICHeight = modalInnerContainer.clientHeight;
+      closeButton.style.top = (0.01*mICHeight).toString() + 'px';
+      closeButton.style.right = (0.01*mICWidth).toString() + 'px';
+    }
+
+    else {
+      closeButton.style.visibility = 'hidden';
+    }
 
   };
   var nameCells = document.querySelectorAll('td.tagpro-username');
