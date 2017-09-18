@@ -1,13 +1,13 @@
 window.onload = function(){
   var dpTable = document.getElementById('table-container-1');
   var modalContainer = document.getElementById('summary-modal-container-1');
-  var windowWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-  var windowHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-  var tableHeight = dpTable.offsetHeight;
-  var tableWidth = dpTable.offsetWidth;
+  var wrapperWidth = document.getElementById('wrapper').clientWidth;
+  var wrapperHeight = document.getElementById('wrapper').clientHeight;
+  var tableHeight = dpTable.clientHeight;
+  var tableWidth = dpTable.clientWidth;
   if (window.screen.width > 900) {
-    modalContainer.style.width = (windowWidth - tableWidth - 1).toString() + 'px';
-    modalContainer.style.maxWidth = (windowWidth - tableWidth - 1).toString() + 'px';
+    modalContainer.style.width = (wrapperWidth - tableWidth - 10).toString() + 'px';
+    modalContainer.style.maxWidth = (wrapperWidth - tableWidth - 10).toString() + 'px';
   }
   modalContainer.style.height = tableHeight.toString() + 'px';
   modalContainer.style.maxHeight = tableHeight.toString() + 'px';

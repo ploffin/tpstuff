@@ -1,6 +1,11 @@
 /* general elements */
 
 body {
+  background-image: url('./images/eltp_logo.svg');
+  background-size: 80vh;
+  background-repeat: no-repeat;
+  background-position: 100% 98%;
+  background-color: #cccccc;
   display: block;
   font-family: 'Open Sans';
   width: 100vw;
@@ -8,31 +13,33 @@ body {
 }
 
 header {
+  width: 95%;
+  margin: 0 auto;
   display: block;
   left: 2%;
 }
 
 header h1 {
-  color: #040404;
+  color: #333333;
   font-size: 380%;
 }
 
 div#wrapper {
   margin: 0 auto;
-  width: 100vw;
-  height: 100vh;
+  width: 95%;
+  height: 95%;
 }
 
 /* draft packet table */
 
 div#table-container-1 {
   float: left;
-  width: 60%;
+  width: 70%;
   max-width: 80%;
   height: 80%;
   max-height: 80%;
   overflow: hidden;
-  border: 0.2em solid #030303;
+  border: 0.2em solid #555555;
   border-radius: 1em;
 }
 
@@ -63,17 +70,17 @@ table.dptable td {
 }
 
 table.dptable tbody tr:nth-child(odd) {
-  background-color: rgba(242, 242, 242, 0.6);
+  background-color: rgb(242, 242, 242);
 }
 
 table.dptable tbody tr:nth-child(even) {
-  background-color: rgba(204, 204, 204, 0.6);
+  background-color: rgb(204, 204, 204);
 }
 
 table.dptable th {
   padding-left: 1em;
   padding-right: 1em;
-  background-color: rgba(204, 0, 0, 0.6);
+  background-color: rgb(204, 0, 0);
   color: #ffffff;
   max-width: 9em;
 }
@@ -131,17 +138,17 @@ div#summary-modal-container-1 {
   position: relative;
   float: right;
   color: #0f0f0f;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 div#summary-modal-container-2 {
-  background-color: #ededed;
+  background-color: rgb(242, 242, 242);
+  float: left;
   border: 0.2em solid #555555;
   border-radius: 1em;
   padding-right: 2em;
   padding-left: 2em;
   padding-bottom: 1em;
-  max-width: 40%;
   overflow-x: hidden;
   z-index: 999;
 }
@@ -170,8 +177,6 @@ div.close-button:focus {
   text-decoration: none;
   cursor: pointer;
   padding: 0.2em;
-  border: 0.1em solid #4a4a4a;
-  border-top-right-radius: 0.5em;
 }
 
 div#summary-modal {
@@ -238,6 +243,11 @@ td#summary-tp-profile {
   header h1 {
     max-width: 99%;
     font-size: 200%;
+  }
+
+  div#wrapper {
+    width: 100%;
+    height: 100%;
   }
 
   div#table-container-1 {
@@ -313,7 +323,7 @@ td#summary-tp-profile {
     max-height: 85%;
     margin: 0 auto;
     overflow-x: hidden;
-    box-shadow: -5px 5px 5px rgba(70,70,70,0.8);
+    box-shadow: -5px 5px 5px rgb(70,70,70);
   }
 
   div#summary-modal {
