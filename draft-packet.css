@@ -176,12 +176,10 @@ div.close-button:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
-  padding: 0.2em;
 }
 
 div#summary-modal {
   width: 100%;
-  height: 100%;
   overflow: auto;
 }
 
@@ -241,8 +239,7 @@ td#summary-tp-profile {
   }
 
   header h1 {
-    max-width: 99%;
-    font-size: 200%;
+    display: none;
   }
 
   div#wrapper {
@@ -251,6 +248,9 @@ td#summary-tp-profile {
   }
 
   div#table-container-1 {
+    position: fixed;
+    width: 100%;
+    height: 100%;
     display: block;
     float: left;
     position: relative;
@@ -258,6 +258,10 @@ td#summary-tp-profile {
     border: 0.2em solid #030303;
     border-radius: 1em;
     margin: 0 auto;
+  }
+
+  div#table-container-1 {
+    position: fixed;
   }
 
   td.tagpro-username,
@@ -303,8 +307,11 @@ td#summary-tp-profile {
   } 
 
   div#summary-modal-container-1 {
+    max-height: 100%;
+    max-width: 95%;
+    position: relative;
+    right: 2%;
     visibility: hidden;
-    position: absolute;
     float: right;
     color: #0f0f0f;
     z-index: 999;
@@ -319,8 +326,8 @@ td#summary-tp-profile {
     padding-right: 1em;
     padding-left: 1em;
     padding-bottom: 0.5em;
-    max-width: 78%;
-    max-height: 85%;
+    max-width: 95%;
+    max-height: 90%;
     margin: 0 auto;
     overflow-x: hidden;
     box-shadow: -5px 5px 5px rgb(70,70,70);
@@ -329,6 +336,7 @@ td#summary-tp-profile {
   div#summary-modal {
     position: relative;
     top: -10%;
+    overflow-y: scroll;
   }
 
   th#summary-tagpro-username {

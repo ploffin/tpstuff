@@ -1,4 +1,4 @@
-window.onload = function(){
+function main() {
   var dpTable = document.getElementById('table-container-1');
   var modalContainer = document.getElementById('summary-modal-container-1');
   var wrapperWidth = document.getElementById('wrapper').clientWidth;
@@ -124,3 +124,6 @@ window.onload = function(){
   child.style.paddingRight = scrollbarWidth
 
 };
+
+window.onload = main;
+window.onresize = main;
