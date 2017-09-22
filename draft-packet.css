@@ -36,9 +36,18 @@ header h1{
 }
 
 div#info {
+  padding: 0.2em;
   margin-top: 0.2%;
   margin-left: 0.3%;
   margin-bottom: 0.7%;
+}
+
+div#info a:link {
+  color: #666666;
+}
+
+div#info a:visited {
+  color: #555555;
 }
 
 div#wrapper {
