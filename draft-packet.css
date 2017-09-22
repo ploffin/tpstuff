@@ -126,9 +126,7 @@ table.dptable th.location {
   padding: 0;
 }
 
-table.dptable td.location {
-  padding-left: 1em;
-  padding-right: 1em;
+table.dptable td.col-8 {
   text-align: left;
 }
 
