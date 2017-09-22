@@ -180,13 +180,25 @@ def add_profile_ids(table,classnames,id_data):
             if classnames[j] == 'tagpro-username':
                 found_names = True
                 name = re.match('(^.*?)\s*$',
-                        cell.text.split('(')[0]).group(1)
+                                cell.text.split('(')[0]).group(1)
                 new = etree.SubElement(row,'td')
                 new.text = id_data[name]
                 new.attrib['class'] = 'tp-profile'
     if not found_names:
         print('column for TP name not found (adding ids)')
     return
+
+def add_numbers(table,classnames):
+    header = table.findall('./thead/tr')
+    for row in header:
+        blank_header = etree.Element('th')
+        row.insert(0,blank_header)
+    body = table.findall('./tr')
+    for i, row in enumerate(body):
+        number_cell = etree.Element('td')
+        number_cell.text = str(i+1)
+        row.insert(0,number_cell)
+    classnames.insert(0,'numbers')
 
 # Define which content has special classes
 mic_case = {
@@ -231,6 +243,13 @@ countries= {
         'Croatia': (u'\U0001f1ed\U0001f1f7','HRV'),
         'Denmark': (u'\U0001f1e9\U0001f1f0','DNK'),
         'Egypt': (u'\U0001f1ea\U0001f1ec','EGY'),
+        'England': ((  u'\U0001f3f4'
+                     + u'\U000e0067'
+                     + u'\U000e0062'
+                     + u'\U000e0065'
+                     + u'\U000e006e'
+                     + u'\U000e0067'
+                     + u'\U000e007f'),'ENG'),
         'Finland': (u'\U0001f1eb\U0001f1ee','FIN'),
         'France': (u'\U0001f1eb\U0001f1f7','FRA'),
         'Germany': (u'\U0001f1e9\U0001f1ea','DEU'),
@@ -263,6 +282,7 @@ main_header = rearrange_header(dptable.getroot(),store_header(dptable),(9,10))
 main_classnames = process_header(main_header,merge_cols,{},no_rowspan)
 add_classes_to_table(dptable,main_classnames,special_classnames)
 add_country_flags(dptable,countries)
+add_numbers(dptable,main_classnames)
 
 response_form = etree.parse('responses.html')
 ids_from_responses = get_profile_ids(response_form.getroot())
