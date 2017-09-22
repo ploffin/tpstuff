@@ -18,6 +18,10 @@ function main() {
   modalContainer.style.height = tableHeight.toString() + 'px';
   modalContainer.style.maxHeight = tableHeight.toString() + 'px';
 
+  var wrapperDims = wrapper.getBoundingClientRect();
+  dpTitle = document.getElementById('dptitle');
+  dpTitle.style.width = wrapperDims.width + 'px';
+
   function noScrollBar(parentId,childId) {
     var parentElement = document.getElementById(parentId);
     var childElement = document.getElementById(childId);

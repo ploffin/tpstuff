@@ -8,7 +8,7 @@ csv2html -n -o dptable.html --table 'class="dptable"' dptable.csv
 csv2html -o responses.html responses.csv
 python format_packet.py
 
-#git reset
-#git add draft-packet.html
-#git commit -m"update table"
-#git push origin master
+git reset
+git add draft-packet.html
+git commit -m"update table"
+git push origin master
