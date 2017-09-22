@@ -133,10 +133,9 @@ def add_country_flags(table,img_look_up):
             code = img_look_up[ct.text][1]
             image = etree.SubElement(cell,'img')
             image.attrib['src'] = './images/emojis/'+img_look_up[text][0]
-            image.tail = code
         else:
             print('Country %s not added!' % text)
-        ct.text = ''
+        ct.text = code
 
 # Get tagpro.gg ids and return as list of pairs
 # uses constant names 'profile-id' and 'tagpro'
