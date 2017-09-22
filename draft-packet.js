@@ -57,6 +57,13 @@ function main() {
         var newTextContent = 'C: ' + content + 'ms';
         toAdd.textContent = newTextContent;
         break;
+      case 'microphone':
+        toAdd = document.createElement("P");
+        toAdd.textContent = "Mic: " + content;
+        break;
+      case 'location':
+        toAdd = content;
+        break;
       case 'col-10':
         toAdd = document.createElement("P");
         var newTextContent = 'O: ' + content + 'ms';
@@ -96,7 +103,12 @@ function main() {
 
     var summarylen = cells.length;
     for (var i = 0; i < summarylen; i++) {
-      fillSummary(cells[i].getAttribute('class'),cells[i].textContent);
+      if (cells[i].firstElementChild != null) {
+        fillSummary(cells[i].getAttribute('class'),cells[i].firstElementChild);
+      }
+      else {
+        fillSummary(cells[i].getAttribute('class'),cells[i].textContent);
+      }
     };
 
     var closeButton = document.querySelector('.close-button');

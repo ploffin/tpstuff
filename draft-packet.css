@@ -237,6 +237,11 @@ table#summary-table img {
   max-width: 2em;
 }
 
+img#modal-location {
+  height: 1.9ex;
+  padding-top: 0.6ex;
+}
+
 tr#summary-row-1 td {
   padding-top: 1em;
   width: 50%;
