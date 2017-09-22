@@ -115,6 +115,7 @@ table.dptable td.tagpro-username:hover {
   -webkit-box-shadow:inset 0px 0px 0px 2px #999999;
   -moz-box-shadow:inset 0px 0px 0px 2px #999999;
   box-shadow:inset 0px 0px 0px 2px #999999;
+  cursor: pointer;
 }
 
 table.dptable td.tagpro-username:active {
