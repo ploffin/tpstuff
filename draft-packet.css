@@ -234,10 +234,6 @@ td#summary-tp-profile {
 
 @media screen and (max-width: 900px) {
 
-  header {
-    max-width: 80vw;
-  }
-
   header h1 {
     display: none;
   }
@@ -248,7 +244,7 @@ td#summary-tp-profile {
   }
 
   div#table-container-1 {
-    position: fixed;
+    position: absolute;   
     width: 100%;
     height: 100%;
     display: block;
@@ -307,14 +303,11 @@ td#summary-tp-profile {
   } 
 
   div#summary-modal-container-1 {
-    max-height: 100%;
-    max-width: 95%;
-    position: relative;
-    right: 2%;
+    position: absolute;
     visibility: hidden;
-    float: right;
     color: #0f0f0f;
     z-index: 999;
+    margin: 0 auto;
   }
 
   div#summary-modal-container-2 {
@@ -326,7 +319,7 @@ td#summary-tp-profile {
     padding-right: 1em;
     padding-left: 1em;
     padding-bottom: 0.5em;
-    max-width: 95%;
+    max-width: 90%;
     max-height: 90%;
     margin: 0 auto;
     overflow-x: hidden;

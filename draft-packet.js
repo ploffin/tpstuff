@@ -1,13 +1,19 @@
 function main() {
   var dpTable = document.getElementById('table-container-1');
   var modalContainer = document.getElementById('summary-modal-container-1');
-  var wrapperWidth = document.getElementById('wrapper').clientWidth;
-  var wrapperHeight = document.getElementById('wrapper').clientHeight;
-  var tableHeight = dpTable.clientHeight;
-  var tableWidth = dpTable.clientWidth;
+  var wrapper = document.getElementById('wrapper')
+  var wrapperWidth = wrapper.clientWidth;
+  var wrapperHeight = wrapper.clientHeight;
+  var tableDims = dpTable.getBoundingClientRect();
+  var tableHeight = tableDims.height;
+  var tableWidth = tableDims.width;
   if (window.screen.width > 900) {
     modalContainer.style.width = (wrapperWidth - tableWidth - 10).toString() + 'px';
     modalContainer.style.maxWidth = (wrapperWidth - tableWidth - 10).toString() + 'px';
+  }
+  else {
+    modalContainer.style.width = tableWidth.toString() + 'px';
+    modalContainer.style.maxWidth = tableWidth.toString() + 'px';
   }
   modalContainer.style.height = tableHeight.toString() + 'px';
   modalContainer.style.maxHeight = tableHeight.toString() + 'px';
@@ -108,6 +114,12 @@ function main() {
     else {
       closeButton.style.visibility = 'hidden';
     }
+    
+    window.onclick = function(event) {
+      if (event.target == wrapper) {
+        modalContainer.style.visibility = 'hidden';        
+      }      
+    }
 
   };
   var nameCells = document.querySelectorAll('td.tagpro-username');
@@ -117,11 +129,6 @@ function main() {
   };
 
   noScrollBar('table-container-1','table-container-2')
-
-  var parent = document.getElementById('table-container-1');
-  var child = document.getElementById('table-container-2');
-  var scrollbarWidth = (child.offsetWidth - child.clientWidth).toString() + "px";
-  child.style.paddingRight = scrollbarWidth
 
 };
 
