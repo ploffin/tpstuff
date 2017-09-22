@@ -124,18 +124,15 @@ def add_classes_to_table(table,classnames,special_classnames={}):
 # Get country flag and code from names
 # and delete name column
 # also uses constants 'col-8' and 'location'
-def add_country_flags(table,uc_look_up,png_look_up={}):
+def add_country_flags(table,img_look_up):
     for ct in table.xpath("//td[@class='col-8']"):
         row = ct.getparent()
         text = ct.text
         cell = row.xpath("./td[@class='location']")[0]
-        code = uc_look_up[ct.text][1]
-        if text in uc_look_up:
-            flag = uc_look_up[ct.text][0]
-            cell.text = flag + code
-        elif text in png_look_up:
+        if text in img_look_up:
+            code = img_look_up[ct.text][1]
             image = etree.SubElement(cell,'img')
-            image.attrib['src'] = png_look_up[text]
+            image.attrib['src'] = './images/emojis/'+img_look_up[text][0]
             image.tail = code
         else:
             print('Country %s not added!' % text)
@@ -235,42 +232,32 @@ no_rowspan = {
         }
 # country flag emojis and ISO codes
 countries= {
-        'Andorra': (u'\U0001f1e6\U0001f1e9','AND'),
-        'Australia': (u'\U0001f1e6\U0001f1fa','AUS'),
-        'Belgium': (u'\U0001f1e7\U0001f1ea','BEL'),
-        'Bosnia and Herzegovina': (u'\U0001f1e7\U0001f1e6','BIH'),
-        'Canada': (u'\U0001f1e8\U0001f1e6','CAN'),
-        'Croatia': (u'\U0001f1ed\U0001f1f7','HRV'),
-        'Denmark': (u'\U0001f1e9\U0001f1f0','DNK'),
-        'Egypt': (u'\U0001f1ea\U0001f1ec','EGY'),
-        'England': ((  u'\U0001f3f4'
-                     + u'\U000e0067'
-                     + u'\U000e0062'
-                     + u'\U000e0065'
-                     + u'\U000e006e'
-                     + u'\U000e0067'
-                     + u'\U000e007f'),'ENG'),
-        'Finland': (u'\U0001f1eb\U0001f1ee','FIN'),
-        'France': (u'\U0001f1eb\U0001f1f7','FRA'),
-        'Germany': (u'\U0001f1e9\U0001f1ea','DEU'),
-        'Hungary': (u'\U0001f1ed\U0001f1fa','HUN'),
-        'Ireland': (u'\U0001f1ee\U0001f1ea','IRL'),
-        'Norway': (u'\U0001f1f3\U0001f1f4','NOR'),
-        'Poland': (u'\U0001f1f5\U0001f1f1','POL'),
-        'Portugal': (u'\U0001f1f5\U0001f1f9','PRT'),
-        'Romania': (u'\U0001f1e7\U0001f1f4','ROU'),
-        'Scotland': ((  u'\U0001f3f4'
-                     + u'\U000e0067'
-                     + u'\U000e0062'
-                     + u'\U000e0073'
-                     + u'\U000e0063'
-                     + u'\U000e0074'
-                     + u'\U000e007f'),'SCT'),
-        'Spain': (u'\U0001f1ea\U0001f1f8','ESP'),
-        'Sweden': (u'\U0001f1f8\U0001f1ea','SWE'),
-        'The Netherlands': (u'\U0001f1f3\U0001f1f1','NLD'),
-        'UK': (u'\U0001f1ec\U0001f1e7','GBR'),
-        'USA': (u'\U0001f1fa\U0001f1f8','USA')
+        'Andorra': ('1f1e6-1f1e9.svg','AND'),
+        'Australia': ('1f1e6-1f1fa.svg','AUS'),
+        'Belgium': ('1f1e7-1f1ea.svg','BEL'),
+        'Bosnia and Herzegovina': ('1f1e7-1f1e6.svg','BIH'),
+        'Canada': ('1f1e8-1f1e6.svg','CAN'),
+        'Croatia': ('1f1ed-1f1f7.svg','HRV'),
+        'Denmark': ('1f1e9-1f1f0.svg','DNK'),
+        'Egypt': ('1f1ea-1f1ec.svg','EGY'),
+        'England': ('england.png','ENG'),
+        'Finland': ('1f1eb-1f1ee.svg','FIN'),
+        'France': ('1f1eb-1f1f7.svg','FRA'),
+        'Germany': ('1f1e9-1f1ea.svg','DEU'),
+        'Hungary': ('1f1ed-1f1fa.svg','HUN'),
+        'Ireland': ('1f1ee-1f1ea.svg','IRL'),
+        'Norway': ('1f1f3-1f1f4.svg','NOR'),
+        'Poland': ('1f1f5-1f1f1.svg','POL'),
+        'Portugal': ('1f1f5-1f1f9.svg','PRT'),
+        'Romania': ('1f1f7-1f1f4.svg','ROU'),
+        'Scotland': ('saltire.png','SCT'),
+        'Slovenia': ('1f1f8-1f1ee.svg','SVN'),
+        'Spain': ('1f1ea-1f1f8.svg','ESP'),
+        'Sweden': ('1f1f8-1f1ea.svg','SWE'),
+        'The Netherlands': ('1f1f3-1f1f1.svg','NLD'),
+        'UK': ('1f1ec-1f1e7.svg','GBR'),
+        'United States': ('1f1fa-1f1f8.svg','USA'),
+        'USA': ('1f1fa-1f1f8.svg','USA')
         }
 #countrypng = {
 #        'Scotland': 'saltire.png'
