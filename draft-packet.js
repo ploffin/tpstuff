@@ -62,7 +62,7 @@ function main() {
         toAdd.textContent = "Mic: " + content;
         break;
       case 'location':
-        toAdd = content;
+        toAdd = content.cloneNode(true);
         break;
       case 'col-10':
         toAdd = document.createElement("P");
