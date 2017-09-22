@@ -376,12 +376,14 @@ td#summary-reddit-name img:active {
   }
 
   div#summary-modal {
+    max-width: 100%;
     position: relative;
     top: -10%;
     overflow-y: scroll;
   }
 
   th#summary-tagpro-username {
+    max-width: 100%;
     font-size: 16pt;
     font-style: italic;
     padding-bottom: 0.4em;
